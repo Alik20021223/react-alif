@@ -17,7 +17,8 @@ function App() {
     }
   }, [fetchNextPage, inView])
 
-  console.log(data?.pageParams[0]++);
+  console.log(data);
+  
 
   const pages = data?.pages?.map((page) => ({
     currentPage: page.currentPage,
@@ -37,7 +38,7 @@ function App() {
 
       <CustomBtn onClick={() => {}}>Добавить</CustomBtn>
 
-      {/* <CustomTable users={usersData} ref={ref} isFetchingNextPage={isFetchingNextPage} columns={ColumnsData} /> */}
+      <CustomTable users={usersData} ref={ref} isFetchingNextPage={isFetchingNextPage} columns={ColumnsData} />
     </>
   )
 }

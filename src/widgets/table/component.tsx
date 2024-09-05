@@ -11,9 +11,10 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 
 const CustomTable: React.FC<CustomTableType> = ({ columns, users, ref, isFetchingNextPage }) => {
 
-    console.log(users);
-    
+    // Проверка на наличие данных
 
+
+    // Хук renderCell должен быть на верхнем уровне компонента
     const renderCell = React.useCallback((user: UserType, columnKey: React.Key) => {
         const cellValue = user[columnKey as keyof UserType];
 
@@ -31,7 +32,7 @@ const CustomTable: React.FC<CustomTableType> = ({ columns, users, ref, isFetchin
             case "role":
                 return (
                     <div className="flex flex-col">
-                        <p className="text-bold text-sm capitalize">{}</p>
+                        <p className="text-bold text-sm capitalize">{cellValue}</p>
                         <p className="text-bold text-sm capitalize text-default-400">{user.team}</p>
                     </div>
                 );
@@ -57,6 +58,10 @@ const CustomTable: React.FC<CustomTableType> = ({ columns, users, ref, isFetchin
         }
     }, []);
 
+    if (!users || !users.pages || users.pages.length === 0) {
+        return <div>No data available</div>;
+    }// Не нужно зависеть от данных в renderCell
+
     return (
         <>
             <Table aria-label="Example table with custom cells">
@@ -72,11 +77,14 @@ const CustomTable: React.FC<CustomTableType> = ({ columns, users, ref, isFetchin
                         <React.Fragment key={page.currentPage}>
                             {page.data.map((user: UserType) => (
                                 <TableRow key={user.id}>
-                                    {(columnKey) => (
-                                        <TableCell>
-                                            {renderCell(user, columnKey)}
-                                        </TableCell>
-                                    )}
+                                    {columns.map((column) => {
+                                        const columnKey = column.uid;
+                                        return (
+                                            <TableCell key={columnKey}>
+                                                {renderCell(user, columnKey)}
+                                            </TableCell>
+                                        );
+                                    })}
                                 </TableRow>
                             ))}
                         </React.Fragment>
@@ -88,4 +96,5 @@ const CustomTable: React.FC<CustomTableType> = ({ columns, users, ref, isFetchin
     )
 }
 
-export default CustomTable
+export default CustomTable;
+

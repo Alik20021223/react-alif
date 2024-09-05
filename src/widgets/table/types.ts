@@ -18,7 +18,7 @@ type Page = {
 
 
 export type UserType = {
-    id: number;
+    id: string;
     name: string;
     role: string;
     team: string;
@@ -28,6 +28,6 @@ export type UserType = {
 }
 
 export type UsersTypeData = {
-    pageParams: number[],
+    pageParams: unknown[],
     pages: Page[]
 };
