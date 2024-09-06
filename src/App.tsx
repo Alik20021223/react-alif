@@ -17,7 +17,6 @@ function App() {
     }
   }, [fetchNextPage, inView])
 
-  console.log(data?.pageParams[0]++);
 
   const pages = data?.pages?.map((page) => ({
     currentPage: page.currentPage,
