@@ -1,8 +1,10 @@
 export type CustomTableType = {
     columns: ColumnsType[],
-    users: UsersTypeData,
+    users: UserType[],
     ref: (node?: Element | null) => void,
     isFetchingNextPage: boolean,
+    onDelete: (id: string) => void,
+    onEdit: (id: string) => void,
 }
 
 type ColumnsType = {
@@ -10,15 +12,8 @@ type ColumnsType = {
     uid: string,
 }
 
-type Page = {
-    currentPage: number,
-    nextPage: number | null,
-    data: UserType[]
-}
-
-
 export type UserType = {
-    id: number;
+    id: string;
     name: string;
     role: string;
     team: string;
@@ -27,7 +22,3 @@ export type UserType = {
     email: string;
 }
 
-export type UsersTypeData = {
-    pageParams: number[],
-    pages: Page[]
-};

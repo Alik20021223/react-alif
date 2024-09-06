@@ -18,7 +18,8 @@ export default {
         light: {
           extend: "dark", // <- inherit default values from dark theme
           colors: {
-            foreground: "#ffffff",
+            background: '#858585',
+            foreground: "#000",
             primary: {
               50: "#caebdc", // Очень светлый
               100: "#b4e1d2", // Немного светлее
@@ -31,7 +32,7 @@ export default {
               800: "#1e664a", // Очень темный
               900: "#19533d", // Самый темный
               DEFAULT: "#39b880", // Основной цвет по умолчанию
-              foreground: "#ffffff", // Цвет текста
+              foreground: "#0558ff", // Цвет текста
             },
             focus: "#F182F6",
           },

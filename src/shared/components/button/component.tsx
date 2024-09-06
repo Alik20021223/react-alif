@@ -3,12 +3,14 @@ import { Button } from "@nextui-org/react";
 import { CustomBtnType } from './types';
 
 
-const CustomBtn: React.FC<CustomBtnType> = ({ children, onClick, className, disabled }) => {
+const CustomBtn: React.FC<CustomBtnType> = ({ children, onClick, className, disabled, props, type}) => {
   return (
     <Button
       disableRipple
+      {...props}
       disabled={disabled}
       onClick={onClick}
+      type={type ? type : "button"}
       className={`relative overflow-visible rounded-full hover:-translate-y-1 px-12 shadow-xl bg-primary-400/100 text-white after:content-[''] after:absolute after:rounded-full after:inset-0 after:bg-primary-400 after:z-[-1] after:transition after:!duration-500 hover:after:scale-150 hover:after:opacity-0 ${className}`}
       size="lg"
     >
