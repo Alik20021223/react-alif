@@ -12,7 +12,7 @@ export interface UserTypeForm {
     name: string;
     role: string;
     team: string;
-    status: string[]; // Измените здесь на string[]
+    status: string[];
     avatar: string;
     email: string;
 }

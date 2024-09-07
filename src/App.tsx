@@ -11,7 +11,6 @@ import ModalCustom from '@widgets/modal/component'
 import { UserTypeForm } from '@widgets/form/types'
 import { useMutationCreateUser } from '@enteties/hooks/use-mutation-create-user'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useQueryFindUser } from '@enteties/hooks/use-query-find-user'
 import { defaultValue } from '@shared/mocks/defaultValueForm'
 import { UserType } from './widgets/table/types'
 
@@ -21,7 +20,6 @@ function App() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [edit, setEdit] = useState<boolean>(false)
-  const { editData } = useQueryFindUser(searchParams.get('id'))
   const { mutateAsync: deleteAsync } = useMutationDeleteUser()
   const { mutateAsync: createAsync } = useMutationCreateUser()
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -44,7 +42,6 @@ function App() {
   const handleEdit = (user: UserType) => {
     setUser(user)
     onOpen()
-    // navigate(`?id=${payload}`);
     setEdit(true)
   };
 

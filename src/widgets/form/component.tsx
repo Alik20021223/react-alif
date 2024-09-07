@@ -47,7 +47,7 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
     const handleSelectionChange = (keys: SharedSelection) => {
         console.log(keys);
 
-        const selectedValue = Array.isArray(keys) ? keys[0] : keys; // В случае выбора нескольких значений
+        const selectedValue = Array.isArray(keys) ? keys[0] : keys;
         setValue('status', selectedValue);
     };
 
@@ -56,7 +56,6 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
         onOpenChange(false)
         reset()
     }
-
 
     return (
         <>
@@ -79,7 +78,7 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
                     name="role"
                     control={control}
                     render={({ field }) => <Input
-                        {...field}// Подключаем поле к форме
+                        {...field}
                         label="Должность"
                         variant="underlined"
                         labelPlacement="outside"
@@ -94,7 +93,7 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
                     name="team"
                     control={control}
                     render={({ field }) => <Input
-                        {...field}// Подключаем поле к форме
+                        {...field}
                         label="Команда"
                         variant="underlined"
                         labelPlacement="outside"
@@ -123,33 +122,28 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
                 <Controller
                     name="status"
                     control={control}
-                    render={({ field }) => {
-                        console.log(field.value);
-
-                        return (
-                            <Select
-                                label="Ваш статус работы"
-                                variant="bordered"
-                                {...field}
-                                defaultSelectedKeys={[...status || 'active']}
-                                labelPlacement="outside"
-                                placeholder="Выберите статус работы"
-                                onSelectionChange={(value) => {
-                                    field.onChange(value);
-                                    handleSelectionChange(value);
-                                }}
-                                classNames={className}
-                                isInvalid={!!errors.status}
-                                errorMessage={errors.status?.message}
-                            >
-                                {statusUser.map((status) => (
-                                    <SelectItem className="text-black" key={status.value} value={status.value}>
-                                        {status.label}
-                                    </SelectItem>
-                                ))}
-                            </Select>
-                        )
-                    }
+                    render={({ field }) =>
+                        <Select
+                            label="Ваш статус работы"
+                            variant="bordered"
+                            {...field}
+                            defaultSelectedKeys={[...status]}
+                            labelPlacement="outside"
+                            placeholder="Выберите статус работы"
+                            onSelectionChange={(value) => {
+                                field.onChange(value);
+                                handleSelectionChange(value);
+                            }}
+                            classNames={className}
+                            isInvalid={!!errors.status}
+                            errorMessage={errors.status?.message}
+                        >
+                            {statusUser.map((status) => (
+                                <SelectItem className="text-black" key={status.value} value={status.value}>
+                                    {status.label}
+                                </SelectItem>
+                            ))}
+                        </Select>
                     }
                 />
 

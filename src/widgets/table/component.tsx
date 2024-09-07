@@ -36,7 +36,7 @@ const CustomTable = forwardRef<HTMLDivElement, CustomTableType>(
                     );
                 case "status":
                     return (
-                        <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
+                        <Chip className="capitalize" color={statusColorMap[typeof user.status === 'string' ? user.status : 'active']} size="sm" variant="flat">
                             {cellValue}
                         </Chip>
                     );
