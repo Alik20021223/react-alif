@@ -13,6 +13,7 @@ import { useMutationCreateUser } from '@enteties/hooks/use-mutation-create-user'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useQueryFindUser } from '@enteties/hooks/use-query-find-user'
 import { defaultValue } from '@shared/mocks/defaultValueForm'
+import { UserType } from './widgets/table/types'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
   const { mutateAsync: createAsync } = useMutationCreateUser()
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { ref, inView } = useInView()
+  const [user, setUser] = useState<UserType>()
 
   useEffect(() => {
     if (inView) {
@@ -39,9 +41,10 @@ function App() {
   }
 
 
-  const handleEdit = (payload: string | undefined) => {
+  const handleEdit = (user: UserType) => {
+    setUser(user)
     onOpen()
-    navigate(`?id=${payload}`);
+    // navigate(`?id=${payload}`);
     setEdit(true)
   };
 
@@ -78,7 +81,7 @@ function App() {
     <>
       <div className='space-y-10'>
         <CustomBtn onClick={handleOpenModal}>Добавить</CustomBtn>
-        <ModalCustom payload={edit ? editData : defaultValue} edit={edit} onOpenChange={onOpenChange} isOpen={isOpen} onSubmit={handleSubmit} />
+        <ModalCustom payload={edit ? user : defaultValue} edit={edit} onOpenChange={onOpenChange} isOpen={isOpen} onSubmit={handleSubmit} />
         <div>
           <CustomTable
             onDelete={handleDelete}

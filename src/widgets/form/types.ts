@@ -1,8 +1,9 @@
 import { z } from "zod"
 import { formSchema } from "./validation"
+import { UserType } from "../table/types";
 
 export type FormModalAddAndEditType = {
-    payload?: UserTypeForm,
+    payload?: UserTypeForm | UserType,
     onOpenChange: (value: boolean) => void,
     formSubmit: (data: UserTypeForm) => void
 }

@@ -5,9 +5,6 @@ import FormModalAddAndEdit from '../form/component';
 
 
 const ModalCustom: React.FC<ModalType> = ({ onOpenChange, isOpen, onSubmit, edit, payload }) => {
-
-    
-
     return (
         <>
             <Modal

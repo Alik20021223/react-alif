@@ -44,7 +44,7 @@ const CustomTable = forwardRef<HTMLDivElement, CustomTableType>(
                     return (
                         <div className="flex items-center justify-center gap-2">
                             <Tooltip content="Edit user" className='text-white' color='primary'>
-                                <Button onPress={() => user.id && onEdit(user.id)} isIconOnly className="text-lg text-white cursor-pointer bg-primary active:opacity-50">
+                                <Button onPress={() => user.id && onEdit(user)} isIconOnly className="text-lg text-white cursor-pointer bg-primary active:opacity-50">
                                     <EditIcon />
                                 </Button>
                             </Tooltip>
