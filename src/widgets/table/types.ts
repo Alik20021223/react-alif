@@ -4,7 +4,7 @@ export type CustomTableType = {
     ref: (node?: Element | null) => void,
     isFetchingNextPage: boolean,
     onDelete: (id: string) => void,
-    onEdit: (id: string) => void,
+    onEdit: (user: UserType) => void,
 }
 
 type ColumnsType = {
@@ -17,7 +17,7 @@ export type UserType = {
     name: string;
     role: string;
     team: string;
-    status: string;
+    status: string | string[];
     avatar: string;
     email: string;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FormModalAddAndEditType, formType } from './types';
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { formSchema } from './validation';
@@ -13,6 +13,7 @@ const className = {
 }
 
 const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpenChange, formSubmit }) => {
+    const status = useMemo(() => payload?.status && !Array.isArray(payload?.status) ? [payload?.status] : [], [payload?.status])
     const {
         handleSubmit,
         setValue,
@@ -25,14 +26,21 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
             name: '',
             role: '',
             team: '',
-            status: [],
+            status,
             avatar: '',
             email: '',
         },
-        values: payload,
+        values: {
+            name: payload?.name || '',
+            role: payload?.role || '',
+            team: payload?.team || '',
+            status,
+            avatar: payload?.avatar || '',
+            email: payload?.email || '',
+        },
     });
 
-
+    console.log(status)
 
     const disabled = Object.keys(errors).length > 0 || isSubmitting;
 
@@ -123,7 +131,7 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
                                 label="Ваш статус работы"
                                 variant="bordered"
                                 {...field}
-                                defaultSelectedKeys={['active']}
+                                defaultSelectedKeys={[...status || 'active']}
                                 labelPlacement="outside"
                                 placeholder="Выберите статус работы"
                                 onSelectionChange={(value) => {

@@ -1,4 +1,6 @@
-export const defaultValue = {
+import { UserType } from "@/widgets/table/types";
+
+export const defaultValue: UserType = {
     name: '',
     role: '',
     team: '',
