@@ -122,8 +122,8 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
                             <Select
                                 label="Ваш статус работы"
                                 variant="bordered"
-                                defaultSelectedKeys={field.value || ['active']}
                                 {...field}
+                                defaultSelectedKeys={['active']}
                                 labelPlacement="outside"
                                 placeholder="Выберите статус работы"
                                 onSelectionChange={(value) => {
