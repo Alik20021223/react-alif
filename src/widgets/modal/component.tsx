@@ -4,9 +4,9 @@ import { ModalType } from './types';
 import FormModalAddAndEdit from '../form/component';
 
 
-const ModalCustom: React.FC<ModalType> = ({ onOpenChange, isOpen, onSubmit }) => {
+const ModalCustom: React.FC<ModalType> = ({ onOpenChange, isOpen, onSubmit, edit, payload }) => {
 
-
+    
 
     return (
         <>
@@ -27,9 +27,9 @@ const ModalCustom: React.FC<ModalType> = ({ onOpenChange, isOpen, onSubmit }) =>
                 <ModalContent>
                     {() => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Добавить пользователя</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">{edit ? 'Изменить пользователя' : 'Добавить пользователя'}</ModalHeader>
                             <ModalBody>
-                                <FormModalAddAndEdit onOpenChange={onOpenChange} formSubmit={onSubmit}/>
+                                <FormModalAddAndEdit payload={payload} onOpenChange={onOpenChange} formSubmit={onSubmit}/>
                             </ModalBody>
                         </>
                     )}

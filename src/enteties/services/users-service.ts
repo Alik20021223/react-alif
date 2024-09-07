@@ -24,7 +24,7 @@ export const deleteUser = async (id: string) => {
     }
 }
 
-export const createUser = async (payload: UserTypeForm) => {
+export const createUser = async (payload: UserType) => {
     try {
         const response = await axios.post(`https://65cf1e2ebdb50d5e5f5a8591.mockapi.io/api/blog/users`, payload);
         console.log(response);
@@ -41,7 +41,6 @@ export const findUser = async (id: string | null) => {
 
     try {
         const response = await axios.get<UserTypeForm>(`https://65cf1e2ebdb50d5e5f5a8591.mockapi.io/api/blog/users/${id}`);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         // Если ошибка - выбрасываем ее, чтобы обработать на уровне компонента

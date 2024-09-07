@@ -1,6 +1,6 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { UserTypeForm } from "@widgets/form/types";
+import { UserType } from "@widgets/table/types";
 import { createUser } from "../services/users-service";
 
 export function useMutationCreateUser() {
@@ -16,7 +16,7 @@ export function useMutationCreateUser() {
     } = useMutation(
         {
             mutationKey: [`create-user`],
-            mutationFn: (payload: UserTypeForm) => createUser(payload),
+            mutationFn: (payload: UserType) => createUser(payload),
             onSuccess: () => queryClient.invalidateQueries()
         }
     );

@@ -30,8 +30,8 @@ const CustomTable = forwardRef<HTMLDivElement, CustomTableType>(
                 case "role":
                     return (
                         <div className="flex flex-col">
-                            <p className="text-bold text-sm capitalize text-black">{cellValue}</p>
-                            <p className="text-bold text-sm capitalize text-default-400">{user.team}</p>
+                            <p className="text-sm text-black capitalize text-bold">{cellValue}</p>
+                            <p className="text-sm capitalize text-bold text-default-400">{user.team}</p>
                         </div>
                     );
                 case "status":
@@ -44,12 +44,12 @@ const CustomTable = forwardRef<HTMLDivElement, CustomTableType>(
                     return (
                         <div className="flex items-center justify-center gap-2">
                             <Tooltip content="Edit user" className='text-white' color='primary'>
-                                <Button onPress={() => onEdit(user.id)} isIconOnly className="text-lg text-white bg-primary cursor-pointer active:opacity-50">
+                                <Button onPress={() => user.id && onEdit(user.id)} isIconOnly className="text-lg text-white cursor-pointer bg-primary active:opacity-50">
                                     <EditIcon />
                                 </Button>
                             </Tooltip>
                             <Tooltip color="danger" content="Delete user">
-                                <Button onPress={() => onDelete(user.id)} isIconOnly className="text-lg bg-danger-400 text-white cursor-pointer active:opacity-50">
+                                <Button onPress={() => user.id && onDelete(user.id)} isIconOnly className="text-lg text-white cursor-pointer bg-danger-400 active:opacity-50">
                                     <DeleteIcon />
                                 </Button>
                             </Tooltip>
@@ -67,7 +67,7 @@ const CustomTable = forwardRef<HTMLDivElement, CustomTableType>(
                     isHeaderSticky
                     bottomContent={
                         (
-                            <div ref={ref} className="flex w-full justify-center text">
+                            <div ref={ref} className="flex justify-center w-full text">
                                 {isFetchingNextPage && <Spinner label='Loading' color="success" size="md" />}
                             </div>
                         )

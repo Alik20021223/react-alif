@@ -25,16 +25,20 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
             name: '',
             role: '',
             team: '',
-            status: '',
+            status: [],
             avatar: '',
             email: '',
         },
         values: payload,
     });
 
+
+
     const disabled = Object.keys(errors).length > 0 || isSubmitting;
 
     const handleSelectionChange = (keys: SharedSelection) => {
+        console.log(keys);
+
         const selectedValue = Array.isArray(keys) ? keys[0] : keys; // В случае выбора нескольких значений
         setValue('status', selectedValue);
     };
@@ -111,23 +115,34 @@ const FormModalAddAndEdit: React.FC<FormModalAddAndEditType> = ({ payload, onOpe
                 <Controller
                     name="status"
                     control={control}
-                    render={({ field }) => <Select
-                        label="Ваш статус работы"
-                        variant="bordered"
-                        {...field}
-                        labelPlacement="outside"
-                        placeholder="Выберите статус работы"
-                        onSelectionChange={handleSelectionChange}
-                        classNames={className}
-                        isInvalid={!!errors.status}
-                        errorMessage={errors.status?.message}
-                    >
-                        {statusUser.map((status) => (
-                            <SelectItem className='text-black' key={status.value} value={status.value}>
-                                {status.label}
-                            </SelectItem>
-                        ))}
-                    </Select>}
+                    render={({ field }) => {
+                        console.log(field.value);
+
+                        return (
+                            <Select
+                                label="Ваш статус работы"
+                                variant="bordered"
+                                defaultSelectedKeys={field.value || ['active']}
+                                {...field}
+                                labelPlacement="outside"
+                                placeholder="Выберите статус работы"
+                                onSelectionChange={(value) => {
+                                    field.onChange(value);
+                                    handleSelectionChange(value);
+                                }}
+                                classNames={className}
+                                isInvalid={!!errors.status}
+                                errorMessage={errors.status?.message}
+                            >
+                                {statusUser.map((status) => (
+                                    <SelectItem className="text-black" key={status.value} value={status.value}>
+                                        {status.label}
+                                    </SelectItem>
+                                ))}
+                            </Select>
+                        )
+                    }
+                    }
                 />
 
                 <Controller

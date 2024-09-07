@@ -7,11 +7,11 @@ export type FormModalAddAndEditType = {
     formSubmit: (data: UserTypeForm) => void
 }
 
-export type UserTypeForm = {
+export interface UserTypeForm {
     name: string;
     role: string;
     team: string;
-    status: string;
+    status: string[]; // Измените здесь на string[]
     avatar: string;
     email: string;
 }

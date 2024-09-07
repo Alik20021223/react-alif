@@ -13,7 +13,7 @@ type ColumnsType = {
 }
 
 export type UserType = {
-    id: string;
+    id?: string;
     name: string;
     role: string;
     team: string;

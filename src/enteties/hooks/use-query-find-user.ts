@@ -1,36 +1,33 @@
-import { UserTypeForm } from "@widgets/form/types";
 import { useQuery } from "@tanstack/react-query";
 import { findUser } from "../services/users-service";
-
+import { UserTypeForm } from "@/widgets/form/types";
 
 const initialData: UserTypeForm = {
     name: '',
     role: '',
     team: '',
-    status: '',
+    status: [''], // Изначально статус - это массив
     avatar: '',
     email: '',
-}
+};
 
 export function useQueryFindUser(id: string | null) {
     const {
-        isLoading,
-        isError,
-        data,
-        error
+        data = initialData, // Убедитесь, что всегда есть начальные данные
     } = useQuery<UserTypeForm>(
         {
             queryKey: ['user/find', id],
             queryFn: () => findUser(id),
-            select: (data) => {
-                return data;
-            },
             initialData,
             enabled: id !== null,
         }
     );
 
-    return {
-        isLoading, isError, data, error
-    }
+    // Преобразование статус в массив, если это строка
+    const editData = {
+        ...data,
+        status: typeof data.status === 'string' ? [data.status] : data.status, // Проверка и преобразование
+    };
+
+    return { editData };
 }

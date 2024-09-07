@@ -1,7 +1,7 @@
 import './App.css'
 import CustomBtn from '@components/button/component'
 import { useGetUsers } from '@enteties/hooks/use-query-get-users'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import CustomTable from '@widgets/table/component'
 import { ColumnsData } from '@shared/mocks/columnsTableUsers'
@@ -10,14 +10,17 @@ import { useDisclosure } from '@nextui-org/react'
 import ModalCustom from '@widgets/modal/component'
 import { UserTypeForm } from '@widgets/form/types'
 import { useMutationCreateUser } from '@enteties/hooks/use-mutation-create-user'
-import { useNavigate } from 'react-router-dom'
-// import { useQueryFindUser } from '@enteties/hooks/use-query-find-user'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useQueryFindUser } from '@enteties/hooks/use-query-find-user'
+import { defaultValue } from '@shared/mocks/defaultValueForm'
 
 function App() {
 
   const { data, fetchNextPage, isFetchingNextPage } = useGetUsers()
   const navigate = useNavigate();
-  // const { data: editData } = useQueryFindUser()
+  const [searchParams] = useSearchParams();
+  const [edit, setEdit] = useState<boolean>(false)
+  const { editData } = useQueryFindUser(searchParams.get('id'))
   const { mutateAsync: deleteAsync } = useMutationDeleteUser()
   const { mutateAsync: createAsync } = useMutationCreateUser()
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -29,16 +32,38 @@ function App() {
     }
   }, [fetchNextPage, inView])
 
-  const handleDelete = (payload: string) => {
-    deleteAsync(payload)
+  const handleDelete = (payload: string | undefined) => {
+    if (payload) {
+      deleteAsync(payload)
+    }
   }
 
-  const handleEdit = (payload: string) => {
-    navigate(`/your-path?id=${payload}`); // Убедитесь, что ваш путь корректен
+
+  const handleEdit = (payload: string | undefined) => {
+    onOpen()
+    navigate(`?id=${payload}`);
+    setEdit(true)
   };
 
   const handleSubmit = (payload: UserTypeForm) => {
-    createAsync(payload)
+    const data = {
+      ...payload,
+      status: payload.status[0]
+    }
+
+    if (edit) {
+      console.log(data);
+    } else {
+      createAsync(data)
+    }
+  }
+
+  const handleOpenModal = () => {
+    onOpen()
+    searchParams.delete('id')
+    navigate({
+      search: searchParams.toString()
+    })
   }
 
   const pages = data?.pages?.map((page) => ({
@@ -52,8 +77,8 @@ function App() {
   return (
     <>
       <div className='space-y-10'>
-        <CustomBtn onClick={onOpen}>Добавить</CustomBtn>
-        <ModalCustom onOpenChange={onOpenChange} isOpen={isOpen} onSubmit={handleSubmit} />
+        <CustomBtn onClick={handleOpenModal}>Добавить</CustomBtn>
+        <ModalCustom payload={edit ? editData : defaultValue} edit={edit} onOpenChange={onOpenChange} isOpen={isOpen} onSubmit={handleSubmit} />
         <div>
           <CustomTable
             onDelete={handleDelete}
